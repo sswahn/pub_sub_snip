@@ -7,6 +7,10 @@ const subscribe = (event, callback) => {
   subs[event] = [ ...subs[event], callback ]
 }
 
+const unsubscribe = event => {
+  delete subs[event]
+}
+
 const publish = (event, data) => {
   if (subs[event]) {
     subs[event].forEach(callback => callback(data))
@@ -15,6 +19,8 @@ const publish = (event, data) => {
 
 const test = data => console.log(`a subscription, was published with: ${data}`)
 
-subscribe("new_event", test)
+subscribe('new_event', test)
 
-publish("new_event", "Hello cruel world!")
+publish('new_event', 'Hello cruel world!')
+
+unsubscribe('new_event')
