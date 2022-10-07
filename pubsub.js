@@ -1,0 +1,20 @@
+let subs = {}
+
+const subscribe = (event, callback) => {
+  if (!subs[event]) {
+    subs[event] = []
+  }
+  subs[event] = [ ...subs[event], callback ]
+}
+
+const publish = (event, data) => {
+  if (subs[event]) {
+    subs[event].forEach(callback => callback(data))
+  }
+}
+
+const test = data => console.log(`a subscription, was published with: ${data}`)
+
+subscribe("new_event", test)
+
+publish("new_event", "Hello cruel world!")
